@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class HogwartsSchoolProjectApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HogwartsSchoolProjectApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HogwartsSchoolProjectApplication.class, args);
+    }
 
 }
