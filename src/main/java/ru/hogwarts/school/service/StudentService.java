@@ -6,7 +6,7 @@ import java.util.Collection;
 public interface StudentService {
     Student addStudent (Student student);
     Student findStudent (long id);
-    Student editStudent (long studentId, Student student);
+    Student editStudent (Student student);
     Student deleteStudent (long id);
     Collection<Student> getAllStudents ();
     Collection<Student> getAllStudentsByAge (int age);

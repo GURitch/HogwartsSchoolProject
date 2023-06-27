@@ -30,8 +30,8 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public Faculty editFaculty(long facultyId, Faculty faculty) {
-        facultyHashMap.put(facultyId, faculty);
+    public Faculty editFaculty(Faculty faculty) {
+        facultyHashMap.put(faculty.getId(), faculty);
         return faculty;
     }
 

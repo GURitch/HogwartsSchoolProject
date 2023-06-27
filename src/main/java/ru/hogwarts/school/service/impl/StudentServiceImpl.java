@@ -34,9 +34,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student editStudent(long studentId, Student student) {
-        student.setId(studentId);
-        studentHashMap.put(studentId, student);
+    public Student editStudent(Student student) {
+        studentHashMap.put(student.getId(), student);
         return student;
     }
 
