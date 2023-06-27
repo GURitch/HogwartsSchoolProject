@@ -19,13 +19,6 @@ public class StudentServiceImpl implements StudentService {
 
 
     @Override
-    public Collection<Student> getAllStudentsByAge(int age) {
-        return studentHashMap.values().stream()
-                .filter(student -> student.getAge() == age)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public Student addStudent(Student student) {
         student.setId(++lastId);
         studentHashMap.put(lastId,student);
@@ -33,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student findStudent(Long studentId) {
+    public Student findStudent(long studentId) {
         if (studentHashMap.containsKey(studentId)) {
             return studentHashMap.get(studentId);
         }
@@ -41,19 +34,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student editStudent(Long studentId, Student student) {
+    public Student editStudent(long studentId, Student student) {
         student.setId(studentId);
         studentHashMap.put(studentId, student);
         return student;
     }
 
     @Override
-    public Student deleteStudent(Long studentId) {
+    public Student deleteStudent(long studentId) {
         return studentHashMap.remove(studentId);
     }
 
     @Override
     public Collection<Student> getAllStudents() {
         return studentHashMap.values();
+    }
+
+    @Override
+    public Collection<Student> getAllStudentsByAge(int age) {
+        return studentHashMap.values().stream()
+                .filter(student -> student.getAge() == age)
+                .collect(Collectors.toList());
     }
 }

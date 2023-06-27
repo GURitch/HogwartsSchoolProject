@@ -6,6 +6,8 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.stream.Collectors;
+
 @Service
 public class FacultyServiceImpl implements FacultyService {
     private final HashMap<Long, Faculty> facultyHashMap;
@@ -23,23 +25,30 @@ public class FacultyServiceImpl implements FacultyService {
     }
 
     @Override
-    public Faculty findFaculty(Long facultyId) {
+    public Faculty findFaculty(long facultyId) {
         return facultyHashMap.get(facultyId);
     }
 
     @Override
-    public Faculty editFaculty(Long facultyId, Faculty faculty) {
+    public Faculty editFaculty(long facultyId, Faculty faculty) {
         facultyHashMap.put(facultyId, faculty);
         return faculty;
     }
 
     @Override
-    public Faculty deleteFaculty(Long facultyId) {
+    public Faculty deleteFaculty(long facultyId) {
         return facultyHashMap.remove(facultyId);
     }
 
     @Override
     public Collection<Faculty> getAllFaculties() {
         return facultyHashMap.values();
+    }
+
+    @Override
+    public Collection<Faculty> getAllFacultiesByColor(String color) {
+        return facultyHashMap.values().stream()
+                .filter(faculty -> faculty.getColor().equals(color))
+                .collect(Collectors.toList());
     }
 }

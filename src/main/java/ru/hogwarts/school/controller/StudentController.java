@@ -45,8 +45,8 @@ public class StudentController {
     public Collection<Student> getAllStudentsInfo (){
         return studentService.getAllStudents();
     }
-    @GetMapping("/byAge/{age}")
-    public Collection<Student> getAllStudentsInfoByAge (@PathVariable int age){
+    @GetMapping("/getByAge/{age}")
+    public Collection<Student> getAllStudentsByAgeInfo (@PathVariable int age){
         return studentService.getAllStudentsByAge(age);
     }
 }
