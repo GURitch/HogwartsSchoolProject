@@ -2,6 +2,7 @@ package ru.hogwarts.school.model;
 
 import jakarta.persistence.*;
 
+import java.util.Collection;
 import java.util.Objects;
 @Entity
 public class Student {
@@ -40,13 +41,6 @@ public class Student {
         this.age = age;
     }
 
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
 
     @Override
     public boolean equals(Object o) {
