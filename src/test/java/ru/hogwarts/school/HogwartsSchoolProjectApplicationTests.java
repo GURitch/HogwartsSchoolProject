@@ -50,12 +50,13 @@ class HogwartsSchoolProjectApplicationTests {
     private FacultyController facultyController;
 
     @Test
-    public void testGetFacultyById() throws Exception {
+    public void testCreateFaculty() throws Exception {
         Long id = 1L;
         String name = "Griffindor";
         String color = "red";
 
         JSONObject userObject = new JSONObject();
+        userObject.put("id", id);
         userObject.put("name", name);
         userObject.put("color", color);
 
