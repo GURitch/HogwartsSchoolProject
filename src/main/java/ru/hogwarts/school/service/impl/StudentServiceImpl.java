@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service.impl;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.StudentIsNotFound;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
@@ -25,7 +26,7 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findStudent(long studentId) {
-        return studentRepository.findById(studentId).get();
+        return studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new);
     }
 
     @Override

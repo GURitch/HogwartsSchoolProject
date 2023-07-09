@@ -14,6 +14,7 @@ import ru.hogwarts.school.service.AvatarService;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
@@ -29,15 +30,15 @@ public class AvatarServiceImpl implements AvatarService {
     }
 
     @Override
-    public Avatar uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+    public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         Student student = studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new);
 
         Path filePath = uploadToDisk(studentId, avatarFile);
-        return uploadToDatabase(avatarFile, student, filePath);
+        uploadToDatabase(avatarFile, student, filePath);
     }
 
     private Path uploadToDisk(Long studentId, MultipartFile avatarFile) throws IOException {
-        Path filePath = Path.of(avatarsDir, studentId + "." + getExtensions(avatarFile.getOriginalFilename()));
+        Path filePath = Path.of(avatarsDir, studentId + "." + getExtensions(Objects.requireNonNull(avatarFile.getOriginalFilename())));
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
         try (
@@ -51,7 +52,7 @@ public class AvatarServiceImpl implements AvatarService {
         return filePath;
     }
 
-    private Avatar uploadToDatabase(MultipartFile avatarFile, Student student, Path filePath) throws IOException {
+    private void uploadToDatabase(MultipartFile avatarFile, Student student, Path filePath) throws IOException {
         Avatar avatar = findAvatar(student.getId());
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
@@ -59,7 +60,6 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
         avatarRepository.save(avatar);
-        return avatar;
     }
 
     private Avatar findAvatar(Long studentId) {

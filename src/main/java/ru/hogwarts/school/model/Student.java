@@ -19,8 +19,8 @@ public class Student {
     private Faculty faculty;
 
     @OneToOne
-    @JoinColumn(name = "avatar_id")
     private Avatar avatar;
+
 
     public Avatar getAvatar() {
         return avatar;
