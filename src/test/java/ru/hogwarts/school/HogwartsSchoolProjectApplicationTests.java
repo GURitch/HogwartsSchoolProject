@@ -75,6 +75,7 @@ class HogwartsSchoolProjectApplicationTests {
                 .andExpect(jsonPath("$.name").value(name))
                 .andExpect(jsonPath("$.color").value(color));
     }
+
     @Test
     public void testCreateFaculty() throws Exception {
         Long id = 1L;
@@ -193,6 +194,7 @@ class HogwartsSchoolProjectApplicationTests {
                 .andExpect(jsonPath("$[1].color").value("red"));
 
     }
+
     @Test
     public void testGetAllFacultiesByColorOrName() throws Exception {
         String color = "red";
