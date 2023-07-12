@@ -52,18 +52,8 @@ public class AvatarController {
             is.transferTo(os);
         }
     }
-    @GetMapping
-    public void getAllAvatars (@RequestParam("page")Integer pageNumber, @RequestParam("size")Integer pageSize,HttpServletResponse response) throws IOException {
-        List<Avatar> avatarList = avatarService.getAllAvatars(pageNumber, pageSize);
-        for (Avatar avatar : avatarList) {
-            Path path = Path.of(avatar.getFilePath());
-            try (InputStream is = Files.newInputStream(path);
-                 OutputStream os = response.getOutputStream()) {
-                response.setStatus(200);
-                response.setContentType(avatar.getMediaType());
-                response.setContentLength((int) avatar.getFileSize());
-                is.transferTo(os);
-            }
-        }
+    @GetMapping("/get-all-avatars")
+    public ResponseEntity<List<Avatar>> getAllAvatars (@RequestParam("page")Integer pageNumber, @RequestParam("size")Integer pageSize) {
+        return ResponseEntity.ok(avatarService.getAllAvatars(pageNumber, pageSize));
     }
 }
