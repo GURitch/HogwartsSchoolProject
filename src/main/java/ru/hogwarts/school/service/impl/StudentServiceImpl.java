@@ -8,6 +8,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,6 +60,21 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Faculty getFacultyOfStudentById(long studentId) {
-        return studentRepository.findById(studentId).get().getFaculty();
+        return studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new).getFaculty();
+    }
+
+    @Override
+    public Integer getCountAllStudents() {
+        return studentRepository.getCountAllStudents();
+    }
+
+    @Override
+    public Double getAvgAgeStudents() {
+        return studentRepository.getAvgAgeStudents();
+    }
+
+    @Override
+    public List<Student> getLastFiveStudents() {
+        return studentRepository.getLastFiveStudents();
     }
 }
