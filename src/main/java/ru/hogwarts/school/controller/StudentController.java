@@ -65,7 +65,7 @@ public class StudentController {
     }
     @GetMapping("/get-Avg-Age-Students")
     public ResponseEntity<Double> getAvgAgeStudents(){
-        return ResponseEntity.ok(studentService.getAvgAgeStudents());
+        return ResponseEntity.ok(studentService.getAverageAgeStudents());
     }
     @GetMapping("/get-Last-Five-Students")
     public ResponseEntity<List<Student>> getLastFiveStudents(){
