@@ -23,32 +23,38 @@ public class InfoController {
         return port;
     }
 
-    @GetMapping("/time-test-v1")
+    @GetMapping("/calculation-time-test")
     public String getTimeTest1(){
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-        Long sum = LongStream
+        long sum = LongStream
                 .iterate(1, a -> a + 1)
                 .limit(1_000_000_0)
+                .filter(i -> i % 2 == 0)
+                .map(e -> (long) (e * 1.23))
+                .filter(i -> i % 3 == 0)
                 .sum();
 
-        Long finishTime = System.currentTimeMillis();
+        long finishTime = System.currentTimeMillis();
 
-        return "Time " + (finishTime-startTime) + " mc";
+        return "Time " + (finishTime-startTime) + " mc, sum = " + sum;
     }
-    @GetMapping("/time-test-v2")
+    @GetMapping("/calculation-time-test-parallel-streams")
     public String getTimeTest2(){
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-        Long sum = LongStream
+        long sum = LongStream
                 .iterate(1, a -> a + 1)
                 .limit(1_000_000_0)
                 .parallel()
+                .filter(i -> i % 2 == 0)
+                .map(e -> (long) (e * 1.23))
+                .filter(i -> i % 3 == 0)
                 .sum();
 
-        Long finishTime = System.currentTimeMillis();
+        long finishTime = System.currentTimeMillis();
 
-        return "Time " + (finishTime-startTime) + " mc";
+        return "Time " + (finishTime-startTime) + " mc, sum = " + sum;
     }
 
 }
