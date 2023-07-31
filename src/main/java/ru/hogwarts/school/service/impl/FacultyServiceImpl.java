@@ -10,6 +10,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,5 +65,13 @@ public class FacultyServiceImpl implements FacultyService {
     public Collection<Student> getAllStudentsOfFaculty(long facultyId) {
         logger.info("getAllStudentsOfFaculty method invoked");
         return studentRepository.findAllByFaculty_Id(facultyId);
+    }
+
+    @Override
+    public String getFacultyLongestName() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparing(String::length))
+                .orElse(null);
     }
 }

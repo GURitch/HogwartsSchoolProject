@@ -13,5 +13,6 @@ public interface FacultyService {
     Collection<Faculty> getAllFaculties ();
     Collection<Faculty> getAllFacultiesByColorOrName(String color, String name);
     Collection<Student> getAllStudentsOfFaculty(long facultyId);
+    String getFacultyLongestName ();
 }
 
