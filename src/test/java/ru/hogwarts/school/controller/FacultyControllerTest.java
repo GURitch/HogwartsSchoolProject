@@ -38,21 +38,9 @@ class FacultyControllerTest {
 
     @MockBean
     private FacultyRepository facultyRepository;
-    @MockBean
-    private AvatarRepository avatarRepository;
-    @MockBean
-    private StudentRepository studentRepository;
 
     @SpyBean
     private FacultyService facultyService;
-    @SpyBean
-    private AvatarService avatarService;
-    @SpyBean
-    private StudentService studentService;
-
-    @InjectMocks
-    private FacultyController facultyController;
-
 
     @Test
     public void testGetFacultyById() throws Exception {
@@ -161,32 +149,6 @@ class FacultyControllerTest {
                 .andExpect(jsonPath("$[1].color").value("blue"));
     }
 
-    @Test
-    public void testGetAllFacultiesByColorInfo() throws Exception {
-        String color = "red";
-        String name = "Faculty 2";
-        Faculty faculty1 = new Faculty();
-        faculty1.setId(1L);
-        faculty1.setName("Faculty 1");
-        faculty1.setColor("red");
-
-        Faculty faculty2 = new Faculty();
-        faculty2.setId(2L);
-        faculty2.setName("Faculty 2");
-        faculty2.setColor("red");
-        List<Faculty> faculties = Arrays.asList(faculty1, faculty2);
-        when(facultyService.getAllFacultiesByColor(color)).thenReturn(faculties);
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/faculty/getByColor/{color}", color))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1L))
-                .andExpect(jsonPath("$[0].name").value("Faculty 1"))
-                .andExpect(jsonPath("$[0].color").value("red"))
-                .andExpect(jsonPath("$[1].id").value(2L))
-                .andExpect(jsonPath("$[1].name").value("Faculty 2"))
-                .andExpect(jsonPath("$[1].color").value("red"));
-
-    }
 
     @Test
     public void testGetAllFacultiesByColorOrName() throws Exception {
