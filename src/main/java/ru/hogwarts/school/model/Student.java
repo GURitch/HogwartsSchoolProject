@@ -22,6 +22,8 @@ public class Student {
     @OneToOne
     private Avatar avatar;
 
+    public Student() {
+    }
 
     public Avatar getAvatar() {
         return avatar;
@@ -33,6 +35,10 @@ public class Student {
 
     public Faculty getFaculty() {
         return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
     }
 
     public Long getId() {

@@ -23,6 +23,10 @@ public class Faculty {
         return students;
     }
 
+    public void setStudents(Collection<Student> students) {
+        this.students = students;
+    }
+
     public Long getId() {
         return id;
     }
