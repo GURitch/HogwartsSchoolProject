@@ -38,7 +38,12 @@ public class AvatarServiceImpl implements AvatarService {
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
         logger.info("uploadAvatar method invoked");
-        Student student = studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new);
+        Student student = null;
+        try {
+            student = studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new);
+        } catch (StudentIsNotFound e) {
+            e.printStackTrace();
+        }
 
         Path filePath = uploadToDisk(studentId, avatarFile);
         uploadToDatabase(avatarFile, student, filePath);
@@ -52,7 +57,7 @@ public class AvatarServiceImpl implements AvatarService {
                 InputStream is = avatarFile.getInputStream();
                 OutputStream os = Files.newOutputStream(filePath, CREATE_NEW);
                 BufferedInputStream bis = new BufferedInputStream(is, 1024);
-                BufferedOutputStream bos = new BufferedOutputStream(os, 1024);
+                BufferedOutputStream bos = new BufferedOutputStream(os, 1024)
         ) {
             bis.transferTo(bos);
         }
@@ -67,6 +72,7 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
         avatarRepository.save(avatar);
+        student.setAvatar(avatar);
     }
 
     private Avatar findAvatar(Long studentId) {
@@ -78,7 +84,7 @@ public class AvatarServiceImpl implements AvatarService {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
     @Override
-    public Avatar findAvatarById (Long studentId){
+    public Avatar findAvatarById (Long studentId) throws StudentIsNotFound{
         logger.info("findAvatarById method invoked");
         if (studentRepository.findById(studentId).isPresent()) {
             Avatar avatar = avatarRepository.findByStudent_Id(studentId);

@@ -31,8 +31,15 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student findStudent(long studentId) {
-        logger.info("findStudent method invoked");
-        return studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new);
+        try {
+            logger.info("findStudent method invoked");
+            return studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new);
+        } catch (StudentIsNotFound e) {
+            logger.info("Студент не найден");
+
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
@@ -42,9 +49,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void deleteStudent(long studentId) {
+    public void deleteStudent(long studentId){
+        studentRepository.delete(findStudent(studentId));
         logger.info("deleteStudent method invoked");
-        studentRepository.deleteById(studentId);
     }
 
     @Override
@@ -66,9 +73,9 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Faculty getFacultyOfStudentById(long studentId) {
+    public Faculty getFacultyOfStudentById(long studentId){
         logger.info("getFacultyOfStudentById method invoked");
-        return studentRepository.findById(studentId).orElseThrow(StudentIsNotFound::new).getFaculty();
+        return findStudent(studentId).getFaculty();
     }
 
     @Override

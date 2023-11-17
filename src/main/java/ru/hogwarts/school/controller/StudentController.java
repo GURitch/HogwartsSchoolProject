@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.exception.StudentIsNotFound;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -19,7 +20,7 @@ public class StudentController {
         this.studentService = studentService;
     }
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudentInfo (@PathVariable long id){
+    public ResponseEntity<Student> getStudentInfo (@PathVariable long id) {
         Student student = studentService.findStudent(id);
         if (student != null) {
             return ResponseEntity.ok(student);
@@ -39,7 +40,7 @@ public class StudentController {
         return ResponseEntity.ok(foundStudent);
     }
     @DeleteMapping("{id}")
-    public ResponseEntity<Student> deleteStudent (@PathVariable long id){
+    public ResponseEntity<Student> deleteStudent (@PathVariable long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }

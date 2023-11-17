@@ -7,6 +7,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.hogwarts.school.exception.StudentIsNotFound;
 import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.service.AvatarService;
 
@@ -34,15 +35,27 @@ public class AvatarController {
     }
     @GetMapping(value = "/students/{id}/avatar-from-db")
     public ResponseEntity<byte[]> downloadAvatar(@PathVariable Long id) {
-        Avatar avatar = avatarService.findAvatarById(id);
+        Avatar avatar = null;
+        try {
+            avatar = avatarService.findAvatarById(id);
+        } catch (StudentIsNotFound e) {
+            e.printStackTrace();
+        }
         HttpHeaders headers = new HttpHeaders();
+        assert avatar != null;
         headers.setContentType(MediaType.parseMediaType(avatar.getMediaType()));
         headers.setContentLength(avatar.getData().length);
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(avatar.getData());
     }
     @GetMapping(value = "/students/{id}/avatar-from-file")
     public void downloadAvatar(@PathVariable Long id, HttpServletResponse response) throws IOException{
-        Avatar avatar = avatarService.findAvatarById(id);
+        Avatar avatar = null;
+        try {
+            avatar = avatarService.findAvatarById(id);
+        } catch (StudentIsNotFound e) {
+            e.printStackTrace();
+        }
+        assert avatar != null;
         Path path = Path.of(avatar.getFilePath());
         try(InputStream is = Files.newInputStream(path);
             OutputStream os = response.getOutputStream()) {

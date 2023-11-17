@@ -20,6 +20,8 @@ public class Student {
     private Faculty faculty;
 
     @OneToOne
+    @JsonBackReference
+    @JoinColumn(name = "avatar_id")
     private Avatar avatar;
 
     public Student() {

@@ -61,7 +61,7 @@ class StudentControllerTest {
 
     @Test
     public void testDeleteStudent() {
-        ResponseEntity<Void> response = restTemplate.exchange("http://localhost:"+port+"/student/{id}", HttpMethod.DELETE, null, Void.class, 2L);
+        ResponseEntity<Void> response = restTemplate.postForEntity("http://localhost:"+port+"/student/{id}", HttpMethod.DELETE, null, Void.class, 52);
         assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
